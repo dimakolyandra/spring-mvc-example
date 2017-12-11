@@ -3,33 +3,29 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/home.css"/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/input.css"/>"/>
 <title>Home</title>
 </head>
 
-<body>
+<body>	
 		<p class="greeting"> Пожалуйста, войдите в систему </p> 
-		<form:form class="form" action="enter-system" method="POST" commandName="user">
-    		<p class="name"> 
-        		<form:input type="text" path="name" placeholder="Ваш логин" /> 
-        		<label>Name</label> 
-    		</p>
+		<form:form id="enter" class="form" action="enter-system" method="POST" commandName="user">
+    		<p class="login"> 
+        		<form:input type="text" path="login" placeholder="Ваш логин" /> 
+        	</p>
    
-    		<p class="email"> 
-        		<form:input path="email" placeholder="Ваш пароль" type="password"/> 
-        		<label>Password</label> 
-    		</p> 
+    		<p class="pass"> 
+        		<form:input path="password" placeholder="Ваш пароль" type="password"/> 
+        	</p> 
   
     		<p class="submit"> 
         		<input type="submit" value="Войти"/> 
   	  		</p> 	
 		</form:form>
-		
 		<form:form action="registration" method="GET">
 			<p class="submit">
-				<input type="submit" value="Регистрация"/>
+				<input class="transition" type="submit" value="Регистрация">
 			</p> 
 		</form:form>
-		
 </body>
 </html>
