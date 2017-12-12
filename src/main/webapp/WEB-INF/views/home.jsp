@@ -22,6 +22,7 @@
         		<input type="submit" value="Войти"/> 
   	  		</p> 	
 		</form:form>
+		
 		<form:form action="registration" method="GET">
 			<p class="submit">
 				<input class="transition" type="submit" value="Регистрация">

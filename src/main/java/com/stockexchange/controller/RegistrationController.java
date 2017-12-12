@@ -9,16 +9,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.stockexchange.entites.User;
 
-
 @Controller
-public class MainController{
+public class RegistrationController {
 	
 	private final static Logger logger = LoggerFactory.getLogger(Logger.class);
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView main(){
-		logger.info("ENTER VIEW");
-		return new ModelAndView("home", "user", new User());
+	@RequestMapping(value="/registration", method=RequestMethod.GET)
+	public ModelAndView registration(){
+		logger.info("REGISTRATION VEIEW");
+		return new ModelAndView("registration", "newUser", new User());
 	}
 	
 }
