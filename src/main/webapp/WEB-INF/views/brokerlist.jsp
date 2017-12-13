@@ -10,17 +10,11 @@
 <body>
 	<p class="greeting"> Выберите брокера, с которым хотите сотрудничать </p>
 	<div class="wrapp">
-    <div class="imagesBox">
-        <form:form action="enter-into-contract" method="POST" commandName="chosenBroker">
-        	<img src="https://upload.wikimedia.org/wikipedia/ru/f/fb/Tks-bank-logo.png">
-        </form:form>
-    </div>
-    <div class="imagesBox">
-        <img src="http://fx-binar.ru/wp-content/uploads/2017/10/2-4.png">
-    </div> 
-    <div class="imagesBox">
-        <img src="http://coolstuff.com.ua/image/data/alfabank.png">
-    </div>
-</div>
+		<c:forEach var="broker" items="${firmList}" varStatus="loopStatus">
+			<div class="imagesBox">
+				<img src="${broker.getAvatarFirmUrl()}">
+			</div>
+		</c:forEach>
+	</div>
 </body>
 </html>

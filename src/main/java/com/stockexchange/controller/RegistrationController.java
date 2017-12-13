@@ -19,5 +19,5 @@ public class RegistrationController {
 		logger.info("REGISTRATION VEIEW");
 		return new ModelAndView("registration", "newUser", new User());
 	}
-	
+
 }

@@ -22,7 +22,7 @@ public class BrokerFirmDAO extends BaseDAO<BrokerFirm, Integer>{
 
 	@Override
 	public ArrayList<BrokerFirm> getAll() {
-		logger.info("GET ALL METHOD!");
+		logger.info("BROKER FIRM GET ALL METHOD!");
 		ArrayList<BrokerFirm> firms = new ArrayList<BrokerFirm>();
 		
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(SQL_SELECT_ALL_FIRM);
@@ -32,7 +32,7 @@ public class BrokerFirmDAO extends BaseDAO<BrokerFirm, Integer>{
 			firm.setFirmName((String)row.get("FIRM_NAME"));
 			firm.setStateRegistrationNumber((String)row.get("STATE_REGISTRATION_NUMBER"));
 			firm.setIndividualTaxpayerIndex((String)row.get("INDIVIDUAL_TAXPAYER_INDEX"));
-			firm.setAvatarFirmUrl((String)row.get("AVATAR_URL"));
+			firm.setAvatarFirmUrl((String)row.get("AVATAR"));
 			firms.add(firm);
 		}
 		return firms;

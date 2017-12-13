@@ -1,6 +1,7 @@
 package com.stockexchange.entites;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 
@@ -12,7 +13,7 @@ public class User {
 	private Date bDate;
 	private String passportData;
 	private String phone;
-	private BrokerFirm firm;
+	private ArrayList<BrokerFirm> firms;
 		
 	public String getLogin() {
 		return login;
@@ -70,12 +71,16 @@ public class User {
 		this.phone = phone;
 	}
 
-	public BrokerFirm getFirm() {
-		return firm;
+	public ArrayList<BrokerFirm> getFirms() {
+		return firms;
 	}
 
-	public void setFirm(BrokerFirm firm) {
-		this.firm = firm;
+	public void setFirms(ArrayList<BrokerFirm> firms) {
+		this.firms = firms;
+	}
+	
+	public void addFirm(BrokerFirm firm){
+		this.firms.add(firm);
 	}
 
 

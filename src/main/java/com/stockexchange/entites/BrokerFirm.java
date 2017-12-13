@@ -1,7 +1,6 @@
 package com.stockexchange.entites;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -66,6 +65,7 @@ public class BrokerFirm {
 	
 	public void printBrokerFirm(Logger log){
 		log.info("=======FIRM_OBJ======");
+		log.info("FIRM_ID:" + id);
 		log.info("FIRM_NAME:" + firmName);
 		log.info("STATE_REGISTRATION_NUMBER" + stateRegistrationNumber);
 		log.info("INDIVIDUAL_TAXPAYER_INDEX:" + individualTaxpayerIndex);
