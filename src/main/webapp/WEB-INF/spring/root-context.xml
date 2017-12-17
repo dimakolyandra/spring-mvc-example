@@ -16,7 +16,11 @@
 		<constructor-arg ref="dataSource"/>
 	</bean>
 		
-	<bean id="brokerFirmDAO" class="com.stockexchange.dao.BrokerFirmDAO" scope="prototype">
+	<bean id="brokerFirmDAO" class="com.stockexchange.dao.BrokerFirmDAO">
+		<constructor-arg ref="jdbcTemplate"/>
+	</bean>
+
+	<bean id="userDAO" class="com.stockexchange.dao.UserDAO">
 		<constructor-arg ref="jdbcTemplate"/>
 	</bean>
 

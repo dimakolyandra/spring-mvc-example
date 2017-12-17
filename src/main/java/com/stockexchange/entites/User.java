@@ -1,11 +1,14 @@
 package com.stockexchange.entites;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
 
 public class User {
+	
+	private BigDecimal id;
 	private String login;
 	private String password;
 	private String firstName;
@@ -14,6 +17,7 @@ public class User {
 	private String passportData;
 	private String phone;
 	private ArrayList<BrokerFirm> firms;
+	private ArrayList<User> brokers;
 		
 	public String getLogin() {
 		return login;
@@ -80,10 +84,36 @@ public class User {
 	}
 	
 	public void addFirm(BrokerFirm firm){
+		if (firms == null){
+			this.firms = new ArrayList<BrokerFirm>();
+		}
 		this.firms.add(firm);
 	}
 
+	public void addBroker(User broker){
+		if (brokers == null){
+			this.brokers = new ArrayList<User>();
+		}
+		this.brokers.add(broker);
+	}
 
+	public BigDecimal getId() {
+		return id;
+	}
+
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
+
+	public ArrayList<User> getBrokers() {
+		return brokers;
+	}
+
+	public void setBrokers(ArrayList<User> brokers) {
+		this.brokers = brokers;
+	}
+
+	
 	public void printUser(Logger log){
 		log.info("=======USER_OBJ======");
 		log.info("LOGIN:" + login);

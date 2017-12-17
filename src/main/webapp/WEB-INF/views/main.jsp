@@ -4,15 +4,6 @@
 </head>
 
 <body>
-	<p>Your name ${user.name}</p>
-	<p>Your email ${user.email}</p>
-	<script type="text/javascript">
-		if (${user.isAdmin}){
-			document.write('User is admin');
-		}
-		else{
-			document.write('User is not admin');
-		}
-	</script>
+	<h1> Здесь будет личный кабинет! </h1>
 </body>
 </html>

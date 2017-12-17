@@ -3,13 +3,24 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/input.css"/>"/>
-<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/input.css"/>"/>
+	<title>Start registration</title>
 </head>
 
 <body>
-	<p class="greeting"> Заполните поля для регистрации </p> 	
+	<div>
+	<p class="greeting"> Заполните поля для регистрации </p>
 	<form:form class="form" action="choose-broker" method="POST" commandName="newUser">
+		<p class="login"> 
+        		<form:input type="text" id="log" path="login" placeholder="Введите ваш логин" /> 
+    			<label>Логин</label>
+    	</p>
+
+		<p class="passwd"> 
+        		<form:input type="password" id="password" path="password" placeholder="Введите ваш пароль" /> 
+    			<label>Пароль</label>
+    	</p>
+
 		<p class="name"> 
         		<form:input type="text" id="name" path="firstName" placeholder="Введите ваше имя" /> 
     			<label>Имя</label>
@@ -18,6 +29,7 @@
         		<form:input type="text" path="secondName" placeholder="Введите вашу фамилию" /> 
     			<label>Фамилия</label>
     	</p>
+    	
     	<p class="bdate"> 
         		<form:input type="date" path="bDate" placeholder="Введите дату рождения" /> 
     			<label>Дата рождения</label>
@@ -36,7 +48,9 @@
     	<p class="submit">
     		<input type="button" value="Далее" onclick="validate_form(this.form)">
     	</p>
+	
 	</form:form> 
+	</div>
     	<script type="text/javascript">
 		
 			function validate_form(form)

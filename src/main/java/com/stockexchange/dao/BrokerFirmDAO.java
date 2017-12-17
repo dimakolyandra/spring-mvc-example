@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.stockexchange.entites.BrokerFirm;
 
-public class BrokerFirmDAO extends BaseDAO<BrokerFirm, Integer>{
+public class BrokerFirmDAO extends BaseDAO<BrokerFirm, BigDecimal>{
 	
 	private final static Logger logger = LoggerFactory.getLogger(Logger.class);
 	
@@ -22,9 +22,7 @@ public class BrokerFirmDAO extends BaseDAO<BrokerFirm, Integer>{
 
 	@Override
 	public ArrayList<BrokerFirm> getAll() {
-		logger.info("BROKER FIRM GET ALL METHOD!");
 		ArrayList<BrokerFirm> firms = new ArrayList<BrokerFirm>();
-		
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(SQL_SELECT_ALL_FIRM);
 		for(Map<String, Object> row: rows){
 			BrokerFirm firm = new BrokerFirm();
@@ -39,7 +37,7 @@ public class BrokerFirmDAO extends BaseDAO<BrokerFirm, Integer>{
 	}
 
 	@Override
-	public BrokerFirm getEntityById(Integer id) {
+	public BrokerFirm getEntityById(BigDecimal id) {
 		return null;
 	}
 
@@ -49,13 +47,11 @@ public class BrokerFirmDAO extends BaseDAO<BrokerFirm, Integer>{
 	}
 
 	@Override
-	public boolean delete(Integer id) {
+	public boolean delete(BigDecimal id) {
 		return false;
 	}
 
 	@Override
-	public boolean insert(BrokerFirm entity) {
-		return false;
-	}
+	public void insert(BrokerFirm entity) {}
 
 }

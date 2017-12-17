@@ -17,7 +17,6 @@ public class MainController{
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView main(){
-		logger.info("ENTER VIEW");
 		return new ModelAndView("home", "user", new User());
 	}
 	
