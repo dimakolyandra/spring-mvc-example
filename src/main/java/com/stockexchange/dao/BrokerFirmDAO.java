@@ -52,6 +52,7 @@ public class BrokerFirmDAO extends BaseDAO<BrokerFirm, BigDecimal>{
 	}
 
 	@Override
-	public void insert(BrokerFirm entity) {}
-
+	public BigDecimal insert(BrokerFirm entity) {
+		return null;
+	}
 }

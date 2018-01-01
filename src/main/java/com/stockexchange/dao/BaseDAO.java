@@ -20,6 +20,6 @@ public abstract class BaseDAO <E, K>{
 	
 	public abstract boolean delete(K id);
 	
-	public abstract void insert(E entity);
+	public abstract K insert(E entity);
 
 }

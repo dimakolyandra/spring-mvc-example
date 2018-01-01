@@ -45,11 +45,7 @@ public class ChooseBrokerController {
 	
 	private BrokerFirm findBrokerById(BigDecimal id){
 		for (BrokerFirm firm: firmList){
-			logger.info("?????????????????????");
-			logger.info(firm.getId().toString());
-			logger.info(id.toString());
 			if (id.equals(firm.getId())){
-				logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				return firm;
 			}
 		}

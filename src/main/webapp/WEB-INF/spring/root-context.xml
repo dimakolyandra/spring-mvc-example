@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+					    http://www.springframework.org/schema/beans/spring-beans.xsd
+					    http://www.springframework.org/schema/util
+					    http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+	<!--  Defines connection with database -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521/ORCL"/>
@@ -20,8 +22,82 @@
 		<constructor-arg ref="jdbcTemplate"/>
 	</bean>
 
+	<!--  Defines stored procedure for registration new user -->
+	<bean id="registerUser" class="com.stockexchange.dao.StoredProcedureDAO">
+		<constructor-arg ref="dataSource"/>
+		<constructor-arg value="ADDING_USER"/>
+		<constructor-arg>
+			<map>			
+				<entry key="P_FIRST_NAME">
+					<util:constant static-field="java.sql.Types.VARCHAR"/>
+				</entry>
+				
+				<entry key="P_SECOND_NAME"> 
+					<util:constant static-field="java.sql.Types.VARCHAR"/>
+				</entry>
+				
+				<entry key="P_BIRTHDAY">
+					<util:constant static-field="java.sql.Types.DATE"/>
+				</entry>
+				
+				<entry key="P_PHONE_NUMBER">
+					<util:constant static-field="java.sql.Types.VARCHAR"/>
+				</entry>
+				
+				<entry key="P_PASSPORT_DATA">
+					<util:constant static-field="java.sql.Types.VARCHAR"/>
+				</entry>
+				
+				<entry key="P_LOGIN">
+					<util:constant static-field="java.sql.Types.VARCHAR"/>
+				</entry>
+				
+				<entry key="P_PASSWORD">
+					<util:constant static-field="java.sql.Types.VARCHAR"/>
+				</entry>
+				
+				<entry key="P_USER_TYPE">
+					<util:constant static-field="java.sql.Types.BIGINT"/>
+				</entry>
+				
+				<entry key="P_BROKER_FIRM_ID">
+					<util:constant static-field="java.sql.Types.BIGINT"/>
+				</entry>
+				
+				<entry key="P_BROKER_USER_ID">
+					<util:constant static-field="java.sql.Types.BIGINT"/>
+				</entry>
+				
+				<entry key="P_CURRENCY_ISO"> 
+					<util:constant static-field="java.sql.Types.CHAR"/>
+				</entry>
+				
+				<entry key="RESULT_ID">
+					<util:constant static-field="java.sql.Types.BIGINT"/>
+				</entry>
+			</map>
+		</constructor-arg>
+		<constructor-arg>
+			<map>
+				<entry key="P_FIRST_NAME" value="IN"/>
+				<entry key="P_SECOND_NAME" value="IN"/>
+				<entry key="P_BIRTHDAY" value="IN"/>
+				<entry key="P_PHONE_NUMBER" value="IN"/>
+				<entry key="P_PASSPORT_DATA" value="IN"/>
+				<entry key="P_LOGIN" value="IN"/>
+				<entry key="P_PASSWORD" value="IN"/>
+				<entry key="P_USER_TYPE" value="IN"/>
+				<entry key="P_BROKER_FIRM_ID" value="IN"/>
+				<entry key="P_BROKER_USER_ID" value="IN"/>
+				<entry key="P_CURRENCY_ISO" value="IN"/>
+				<entry key="RESULT_ID" value="OUT"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
 	<bean id="userDAO" class="com.stockexchange.dao.UserDAO">
 		<constructor-arg ref="jdbcTemplate"/>
+		<property name="registerUser" ref="registerUser"/>
 	</bean>
 
 </beans>
