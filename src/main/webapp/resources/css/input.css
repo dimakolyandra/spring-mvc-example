@@ -14,7 +14,7 @@ p{
 	text-align: center; 
 	color:black;
     font: normal 13px/100% Verdana, Tahoma, sans-serif; 
-	width: 200px; 
+	width: 210px; 
     background-image: url(grey.jpg);
     background-size: 100%;
     border-radius: 10px 10px 10px 10px;
@@ -25,7 +25,7 @@ input, textarea{
     border: solid 1px #E5E5E5; 
     outline: 0; 
     font: normal 13px/100% Verdana, Tahoma, sans-serif; 
-    width: 200px; 
+    width: 190px; 
     background: #FFFFFF; 
     border-radius: 10px 10px 10px 10px;
 } 

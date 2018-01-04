@@ -1,13 +1,9 @@
 package com.stockexchange.dao;
 
-import java.math.BigDecimal;
-import java.sql.Types;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
@@ -29,12 +25,10 @@ public class StoredProcedureDAO extends StoredProcedure{
 	 * @param inOrOut Map, containing name of stored procedure parameter as key and parameter type (in or out) as value 
 	 */
 	
-	private final static Logger logger = LoggerFactory.getLogger(Logger.class);
-	public String a ="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 	public StoredProcedureDAO(DataSource dataSource, 
-							  String sprocName,
-							  Map<String, Integer> params, 
-							  Map<String, TypeOfStoredProcedureParameter> inOrOut){		
+	                          String sprocName,
+	                          Map<String, Integer> params,
+	                          Map<String, TypeOfStoredProcedureParameter> inOrOut){		
 		super(dataSource, sprocName);
 		for (String parameter: params.keySet()){
 			TypeOfStoredProcedureParameter isInOrOut = inOrOut.get(parameter);
@@ -47,10 +41,4 @@ public class StoredProcedureDAO extends StoredProcedure{
 		}
 		compile();
 	}
-	
-/*	public Has execute(Map<String, Object> params){
-		return super.execute(params);
-	}*/
-	
-	
 }

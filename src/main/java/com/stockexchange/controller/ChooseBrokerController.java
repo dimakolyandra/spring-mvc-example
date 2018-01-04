@@ -3,10 +3,9 @@ package com.stockexchange.controller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,72 +13,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.stockexchange.dao.BrokerFirmDAO;
-import com.stockexchange.dao.UserDAO;
 import com.stockexchange.entites.BrokerFirm;
 import com.stockexchange.entites.User;
+import com.stockexchange.services.RegistrationService;
 
 @Controller
 public class ChooseBrokerController {
-
-	@Autowired
-	@Qualifier("brokerFirmDAO")
-	private BrokerFirmDAO brokerFirmDAO;
-	
-	@Autowired
-	@Qualifier("userDAO")
-	private UserDAO userDAO;
-
-	private User newUser;
-	private User leastLoadedWorker;
-	private ArrayList<BrokerFirm> firmList;
-	private final static Logger logger = LoggerFactory.getLogger(Logger.class);
-
-	public User getNewUser() {
-		return newUser;
-	}
-
-	public void setNewUser(User newUser) {
-		this.newUser = newUser;
-	}
-	
-	private BrokerFirm findBrokerById(BigDecimal id){
-		for (BrokerFirm firm: firmList){
-			if (id.equals(firm.getId())){
-				return firm;
-			}
-		}
-		return null;
-	}
-	
+    
+    @Autowired
+    @Qualifier("regServ")
+    private RegistrationService regServ;
+    
 	@RequestMapping(value="/choose-broker", method=RequestMethod.POST)
 	public ModelAndView chooseBroker(@ModelAttribute("newUser") User user){
-		firmList = brokerFirmDAO.getAll();		
-		newUser = user;
+	    ArrayList<BrokerFirm> firmList = regServ.getAllFirms();
+	    regServ.setCurrentTrader(user);
 		return new ModelAndView("brokerlist", "firmList", firmList);
 	}
 	
-	@RequestMapping(value="/finish-registration", method=RequestMethod.GET)
+	@RequestMapping(value="/prepare-for-submit-registration", method=RequestMethod.GET)
 	public ModelAndView getFinishReg(@RequestParam("id") String firmId){
-		// TODO: Сделать дополнительное представление 
-		//       для получения информации о брокере
-		logger.info(firmId);
-		BrokerFirm chosenFirm = findBrokerById(new BigDecimal(firmId));
-		leastLoadedWorker = userDAO.getLeastLoadedWorker(new BigDecimal(firmId));
-		chosenFirm.printBrokerFirm(logger);
-		if (chosenFirm != null){
-			newUser.addFirm(chosenFirm);	
-			newUser.addBroker(leastLoadedWorker);
-		}
-		newUser.getFirms();
-		return new ModelAndView("finish_registration", "worker", leastLoadedWorker);
+	    User leastLoadedWorker = regServ.findLeastLoadedWorker(new BigDecimal(firmId));
+	    regServ.setChosenWorker(leastLoadedWorker);
+	    return new ModelAndView("submit_registration", "worker", leastLoadedWorker);
 	}
 	
 	@RequestMapping(value="/submit-registration", method=RequestMethod.GET)
 	public ModelAndView submitReg(){
-		newUser.printUser(logger);
-		userDAO.insert(newUser);
-		return new ModelAndView("main", "user", newUser);
+	    try{
+	        User newTrader = regServ.finishRegistration();
+	        return new ModelAndView("main", "user", newTrader);
+	    }
+	    catch(DuplicateKeyException ex){
+	        ModelAndView view = new ModelAndView("registration");
+	        view.addObject("newUser", regServ.getCurentTrader());
+	        view.addObject("isFirst", new Boolean(false));
+	        return view;
+	    }
 	}
 	
 }

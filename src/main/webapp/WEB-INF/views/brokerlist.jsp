@@ -18,14 +18,14 @@
     <div class="carousel-inner">
 
       <div class="item active">
-        <form:form id="subm" method="GET" action="finish-registration">
+        <form:form id="subm" method="GET" action="prepare-for-submit-registration">
         		<input type="image" src="${firmList.get(0).getAvatarFirmUrl()}" name="id" value="${firmList.get(0).getId()}"/>
         </form:form>
       </div>
       
 	<c:forEach var="broker" items="${firmList.subList(1, firmList.size())}" varStatus="loopStatus">
       <div class="item">
-        <form:form id="subm" method="GET" action="finish-registration">
+        <form:form id="subm" method="GET" action="prepare-for-submit-registration">
         		<input type="image" src="${broker.getAvatarFirmUrl()}" name="id" value="${broker.getId()}"/>
         </form:form>
       </div>

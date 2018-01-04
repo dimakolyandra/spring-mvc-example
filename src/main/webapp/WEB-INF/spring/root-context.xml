@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 					    http://www.springframework.org/schema/beans/spring-beans.xsd
 					    http://www.springframework.org/schema/util
-					    http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+					    http://www.springframework.org/schema/util/spring-util-2.5.xsd
+					    http://www.springframework.org/schema/context      
+					    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+					    http://www.springframework.org/schema/tx
+					    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	
+	<context:annotation-config/>
+	
 	<!--  Defines connection with database -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
@@ -18,10 +27,7 @@
 		<constructor-arg ref="dataSource"/>
 	</bean>
 		
-	<bean id="brokerFirmDAO" class="com.stockexchange.dao.BrokerFirmDAO">
-		<constructor-arg ref="jdbcTemplate"/>
-	</bean>
-
+	
 	<!--  Defines stored procedure for registration new user -->
 	<bean id="registerUser" class="com.stockexchange.dao.StoredProcedureDAO">
 		<constructor-arg ref="dataSource"/>
@@ -60,10 +66,6 @@
 					<util:constant static-field="java.sql.Types.BIGINT"/>
 				</entry>
 				
-				<entry key="P_BROKER_FIRM_ID">
-					<util:constant static-field="java.sql.Types.BIGINT"/>
-				</entry>
-				
 				<entry key="P_BROKER_USER_ID">
 					<util:constant static-field="java.sql.Types.BIGINT"/>
 				</entry>
@@ -87,17 +89,30 @@
 				<entry key="P_LOGIN" value="IN"/>
 				<entry key="P_PASSWORD" value="IN"/>
 				<entry key="P_USER_TYPE" value="IN"/>
-				<entry key="P_BROKER_FIRM_ID" value="IN"/>
 				<entry key="P_BROKER_USER_ID" value="IN"/>
 				<entry key="P_CURRENCY_ISO" value="IN"/>
 				<entry key="RESULT_ID" value="OUT"/>
 			</map>
 		</constructor-arg>
 	</bean>
-
+    
+    <!-- Defines transactions dispatcher -->
+    <tx:annotation-driven  transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    
+    <!-- Defines beans needed for application -->
 	<bean id="userDAO" class="com.stockexchange.dao.UserDAO">
 		<constructor-arg ref="jdbcTemplate"/>
-		<property name="registerUser" ref="registerUser"/>
 	</bean>
+    
+    <bean id="brokerFirmDAO" class="com.stockexchange.dao.BrokerFirmDAO">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
 
+
+    <bean id="regServ" class="com.stockexchange.services.RegistrationService"/>
+    
 </beans>
