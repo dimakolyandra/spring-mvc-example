@@ -15,8 +15,6 @@ import com.stockexchange.entites.BrokerFirm;
 @Repository
 public class BrokerFirmDAO extends BaseDAO<BrokerFirm, BigDecimal>{
 	
-	private final static Logger logger = LoggerFactory.getLogger(Logger.class);
-	
 	private static final String SQL_SELECT_ALL_FIRM = "SELECT * FROM BROKER_FIRM";
 	
 	public BrokerFirmDAO(JdbcTemplate dbTemp) {

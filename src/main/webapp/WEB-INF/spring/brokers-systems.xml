@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context      
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <bean id="sberbankSys" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521/ORCL"/>
+        <property name="username" value="sberbank_sys"/>
+        <property name="password" value="1234"/>
+    </bean>
+
+    <bean id="forexSys" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521/ORCL"/>
+        <property name="username" value="forex_sys"/>
+        <property name="password" value="1234"/>
+    </bean>
+
+    <bean id="alphaBankSys" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521/ORCL"/>
+        <property name="username" value="alpha_bank_sys"/>
+        <property name="password" value="1234"/>
+    </bean>
+
+    <bean id="jdbcTemplateSber" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="sberbankSys"/>
+    </bean>
+
+    <bean id="jdbcTemplateForex" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="forexSys"/>
+    </bean>
+
+    <bean id="jdbcTemplateAlpha" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="alphaBankSys"/>
+    </bean>
+   
+            <bean id="brokerSystemMap" class="java.util.HashMap">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="org.springframework.jdbc.core.JdbcTemplate">
+                <entry key="3" value-ref="jdbcTemplateSber"/>
+                <entry key="4" value-ref="jdbcTemplateForex"/>
+                <entry key="5" value-ref="jdbcTemplateAlpha"/>                    
+            </map>
+        </constructor-arg>
+    </bean>
+</beans>    
