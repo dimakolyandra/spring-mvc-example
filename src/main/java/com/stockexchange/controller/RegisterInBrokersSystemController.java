@@ -50,7 +50,9 @@ public class RegisterInBrokersSystemController {
           JdbcTemplate chosenSystem = brokerSystemsMap.get(registrationRequest.getBrokerFirmId());
           brokerSystemDAO.setJdbcTemplate(chosenSystem);
           brokerSystemDAO.insertClient(registrationRequest.getNewUser());
-          brokerSystemDAO.insertClientAccount("RUB", registrationRequest.getNewUser().getPassportData());
+          brokerSystemDAO.insertClientAccount("RUB", 
+                                              registrationRequest.getNewUser().getPassportData(), 
+                                              registrationRequest.getAccountNumber());
       }
 
 }

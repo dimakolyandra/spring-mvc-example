@@ -76,7 +76,7 @@ public class UserDAO extends BaseDAO<User, BigDecimal>{
 		return false;
 	}
 	
-	public void registerTrader(User newTrader, User chosenWorker){
+	public BigDecimal registerTrader(User newTrader, User chosenWorker){
 	    Map<String, Object> inParams = new HashMap<String, Object>();
         inParams.put("P_FIRST_NAME", newTrader.getFirstName());
         inParams.put("P_SECOND_NAME", newTrader.getSecondName());
@@ -88,7 +88,8 @@ public class UserDAO extends BaseDAO<User, BigDecimal>{
         inParams.put("P_USER_TYPE", new Integer(1));
         inParams.put("P_BROKER_USER_ID", chosenWorker.getId());
         inParams.put("P_CURRENCY_ISO", new String("RUB"));
-        registerUser.execute(inParams);
+        Map<String, Object> outParams = registerUser.execute(inParams);
+        return (BigDecimal) outParams.get("RESULT_ACCOUNT_NUMBER");
 	}
 	
 	@Override

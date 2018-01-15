@@ -76,8 +76,8 @@
 					<util:constant static-field="java.sql.Types.CHAR"/>
 				</entry>
 				
-				<entry key="RESULT_ID">
-					<util:constant static-field="java.sql.Types.BIGINT"/>
+				<entry key="RESULT_ACCOUNT_NUMBER">
+					<util:constant static-field="java.sql.Types.NUMERIC"/>
 				</entry>
 			</map>
 		</constructor-arg>
@@ -93,7 +93,7 @@
 				<entry key="P_USER_TYPE" value="IN"/>
 				<entry key="P_BROKER_USER_ID" value="IN"/>
 				<entry key="P_CURRENCY_ISO" value="IN"/>
-				<entry key="RESULT_ID" value="OUT"/>
+				<entry key="RESULT_ACCOUNT_NUMBER" value="OUT"/>
 			</map>
 		</constructor-arg>
 	</bean>

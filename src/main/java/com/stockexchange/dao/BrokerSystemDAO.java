@@ -1,5 +1,7 @@
 package com.stockexchange.dao;
 
+import java.math.BigDecimal;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -22,8 +24,9 @@ public class BrokerSystemDAO {
     private final String INSERT_CLIENT_ACCOUNT_INTO_BROKER_SYSTEM = 
             "INSERT INTO CLIENT_ACCOUNT("
             + "ISO, "
-            + "PASSPORT_DATA) "
-            + "VALUES(?, ?)";
+            + "PASSPORT_DATA,"
+            + "ACCOUNT_NUMBER) "
+            + "VALUES(?, ?, ?)";
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
@@ -42,8 +45,11 @@ public class BrokerSystemDAO {
                             user.getPassportData());
     }
     
-    public void insertClientAccount(String iso, String passport){
-        jdbcTemplate.update(INSERT_CLIENT_ACCOUNT_INTO_BROKER_SYSTEM, iso, passport);
+    public void insertClientAccount(String iso, String passport, BigDecimal accountNumber){
+        jdbcTemplate.update(INSERT_CLIENT_ACCOUNT_INTO_BROKER_SYSTEM, 
+                            iso, 
+                            passport, 
+                            accountNumber);
     }
 
 }

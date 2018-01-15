@@ -83,7 +83,7 @@ public class RegistrationService {
         return userDAO.getLeastLoadedWorker(firmId);
     }
     
-    private void validateResponse(StatusLine status) throws ExternalBrokerSystemException{
+    private void checkResponse(StatusLine status) throws ExternalBrokerSystemException{
         if (status.getStatusCode() != 200){
             throw new ExternalBrokerSystemException();
         }
@@ -94,11 +94,11 @@ public class RegistrationService {
                    readOnly=false,
                    rollbackFor=Exception.class)
     public User finishRegistration() throws Exception{
-        userDAO.registerTrader(currentTrader, chosenWorker);
+        BigDecimal accountNumber = userDAO.registerTrader(currentTrader, chosenWorker);        
         ObjectMapper mapper = new ObjectMapper();
         
         BrokersSystemRegistrationRequest regReq = new BrokersSystemRegistrationRequest(
-                firmId.toString(), currentTrader);
+                firmId.toString(), currentTrader, accountNumber);
         
         String  reqReqJson = mapper.writeValueAsString(regReq);
         
@@ -109,9 +109,9 @@ public class RegistrationService {
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-type", "application/json;charset=utf-8");
-        
         CloseableHttpResponse response = client.execute(httpPost);
-        validateResponse(response.getStatusLine());
+
+        checkResponse(response.getStatusLine());
         client.close();
         return null;
     }
